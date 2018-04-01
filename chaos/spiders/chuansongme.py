@@ -34,23 +34,6 @@ class ChuanSongMe(scrapy.Spider):
         for href in response.css('a[style="float: right"]::attr("href")'):
             yield response.follow(href, self.parse)
 
-#         page_numbers = response.css('span[style="font-size: 1em;font-weight: bold"] a::text').extract()
-#         for i in range(int(page_numbers.pop())):
-#             url = BASE_URL + self.name + '?start=' + str(i * PAGE_SIZE)
-#             yield response.follow(url, callback=self.parse_pages)
-
-#     def parse_pages(self, response):
-#         articles = response.css('a[class="question_link"]')
-#         with open(self.filename, 'a', encoding='UTF-8') as file:
-#             for article in articles:
-#                 article_title = article.css('a::text').extract_first().strip()
-#                 article_href = response.urljoin(article.css('a::attr("href")').extract_first())
-#                 file.write('%s\n' % article_title)
-#                 yield {
-#                     'article_title': article_title,
-#                     'article_href': article_href
-#                 }
-
 class DBDevs(ChuanSongMe):
     name = 'DBDevs'
     filename = 'DBDevs' + '-' + str(date.today()) + ".txt"
